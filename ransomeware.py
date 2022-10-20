@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-print("Hello world")
-=======
+
 # import os
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
@@ -39,4 +37,3 @@ with open(filePath, "rb") as file:
 with open(filePath, "wb") as file:
     file.write(encrypted_data)
 quit()
->>>>>>> 8fc6481941b3e9262062f0c729154db55a62977d
