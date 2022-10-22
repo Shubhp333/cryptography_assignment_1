@@ -1,20 +1,14 @@
-import os
 from cryptography.fernet import Fernet
-
-files = []
-
-for file in os.listdir():
-    if file == "ransomeware.py" or file == "server.py" or file == "decrypt.py" or file == "random_key.txt":
-        continue
-    if os.path.isfile(file):
-        files.append(file)
-print(files)
 
 key = input("enter the key:")
 
-for file in files:
-    with open (file, "rb") as thefile:
-        contents = thefile.read()
-    contents_decrypted = Fernet(key).decrypt(contents)
-    with open(file, "wb") as thefile:
-        thefile.write(contents_decrypted)
+# with open("D:\conestoga\cryptography\Assignment_1\private_key.key", 'rb') as p:
+#     private_key = p.read()
+# key_decrypt = private_key.decrypt(key)
+
+
+with open ("D:\conestoga\cryptography\Assignment_1\client.txt", "rb") as thefile:
+    contents = thefile.read()
+contents_decrypted = Fernet(key).decrypt(contents)
+with open("D:\conestoga\cryptography\Assignment_1\client.txt", "wb") as thefile:
+    thefile.write(contents_decrypted)
