@@ -10,7 +10,8 @@ symentric_key = Fernet.generate_key()
 # this command for save the fernet key
 # with open("thekey.key", "wb") as thekey:
 #     thekey.write(symentric_key)
-
+IP = "10.0.0.150"  
+PORT = 333
 
 # encrypt the file using symentric key
 file = "D:\conestoga\cryptography\Assignment_1\client.txt"
@@ -27,9 +28,9 @@ with open ("D:\conestoga\cryptography\Assignment_1\public_key.key", 'rb') as pub
 # this command encrypt symentric key using public key
     encrypted_Symmetric_Key = public_key.encrypt(symentric_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
 
-# this for server ID and port for send key to server
-IP = "10.0.0.150"  
-PORT = 333
+with open ("Encryted_symentric_key.key", 'wb') as esk:
+    esk.write(encrypted_Symmetric_Key)
+
 
 # this command send encrypted symentric key to server
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -38,3 +39,23 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.send(encrypted_Symmetric_Key)
     print('key sended')
     s.close()
+
+IP = "10.0.0.150"  
+PORT = 334
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((IP, PORT))
+    s.listen(1)
+    conn, addr = s.accept()
+    
+    print(f'Connection from {addr} established')
+
+    with conn:
+        while True:
+
+            # encrypt symentric key received from clientcode
+            decrypted_symentric_key = conn.recv(1024)
+            break     
+
+with open ("decrypted_symentric_key.key", 'wb') as dsk:
+    dsk.write(decrypted_symentric_key)

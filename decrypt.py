@@ -1,14 +1,12 @@
 from cryptography.fernet import Fernet
 
-key = input("enter the key:")
+# server send the decrypted symentric key to client and client have to put key manually
+key = input("enter the decrypt symentric key for decrypt file :")
 
-# with open("D:\conestoga\cryptography\Assignment_1\private_key.key", 'rb') as p:
-#     private_key = p.read()
-# key_decrypt = private_key.decrypt(key)
-
-
-with open ("D:\conestoga\cryptography\Assignment_1\client.txt", "rb") as thefile:
+# this code decrypt the client file with the key
+file_client = "D:\conestoga\cryptography\Assignment_1\client.txt"
+with open (file_client, "rb") as thefile:
     contents = thefile.read()
 contents_decrypted = Fernet(key).decrypt(contents)
-with open("D:\conestoga\cryptography\Assignment_1\client.txt", "wb") as thefile:
+with open(file_client, "wb") as thefile:
     thefile.write(contents_decrypted)
