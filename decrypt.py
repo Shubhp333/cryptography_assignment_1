@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
 
-# server send the decrypted symentric key to client and client have to put key manually
-key = input("enter the decrypt symentric key for decrypt file :")
+# server send the decrypted symmetric key to client and client have to put key manually
+key = input("enter the decrypt symmetric key for decrypt file :")
 
 # this code decrypt the client file with the key
 file_client = "D:\conestoga\cryptography\Assignment_1\client.txt"
